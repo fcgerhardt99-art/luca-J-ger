@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luca Jäg – Virtual Exhibition</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      background: #f7f7f4;
+      color: #111;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+      mix-blend-mode: difference;
+      color: white;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .intro {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #f7f7f4;
+    }
+
+    .intro h1 {
+      font-size: clamp(48px, 10vw, 140px);
+      font-weight: 400;
+      letter-spacing: -0.08em;
+      line-height: 0.9;
+    }
+
+    .intro p {
+      position: absolute;
+      bottom: 45px;
+      font-size: 14px;
+      opacity: 0.6;
+    }
+
+    .room {
+      min-height: 140vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+      background: linear-gradient(#fafafa, #ededeb);
+    }
+
+    .gallery-space {
+      width: min(1200px, 90vw);
+      height: 720px;
+      position: sticky;
+      top: 80px;
+      transform-style: preserve-3d;
+    }
+
+    .back-wall {
+      position: absolute;
+      inset: 0;
+      background: #fbfbf8;
+      border: 1px solid #e4e4df;
+      box-shadow: inset 0 0 80px rgba(0,0,0,0.04);
+    }
+
+    .floor {
+      position: absolute;
+      left: 0;
+      bottom: -260px;
+      width: 100%;
+      height: 360px;
+      background: linear-gradient(#efefeb, #dcdcd6);
+      transform: rotateX(78deg);
+      transform-origin: top;
+      border-top: 1px solid #ddd;
+    }
+
+    .ceiling {
+      position: absolute;
+      left: 0;
+      top: -260px;
+      width: 100%;
+      height: 360px;
+      background: linear-gradient(#ffffff, #eeeeea);
+      transform: rotateX(-78deg);
+      transform-origin: bottom;
+      border-bottom: 1px solid #e0e0dc;
+    }
+
+    .side-wall-left,
+    .side-wall-right {
+      position: absolute;
+      top: 0;
+      width: 360px;
+      height: 100%;
+      background: #f4f4f0;
+      border: 1px solid #e2e2dc;
+    }
+
+    .side-wall-left {
+      left: -360px;
+      transform: rotateY(76deg);
+      transform-origin: right;
+    }
+
+    .side-wall-right {
+      right: -360px;
+      transform: rotateY(-76deg);
+      transform-origin: left;
+    }
+
+    .artwork {
+      position: absolute;
+      background: white;
+      padding: 12px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .artwork:hover {
+      transform: scale(1.04);
+      box-shadow: 0 32px 90px rgba(0,0,0,0.18);
+    }
+
+    .artwork img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #ddd;
+    }
+
+    .main-art {
+      width: 360px;
+      height: 460px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .left-art {
+      width: 220px;
+      height: 280px;
+      left: 80px;
+      top: 210px;
+    }
+
+    .right-art {
+      width: 220px;
+      height: 280px;
+      right: 80px;
+      top: 210px;
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 38px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.55;
+    }
+
+    .transition {
+      min-height: 80vh;
+      background: #111;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(32px, 7vw, 100px);
+      letter-spacing: -0.06em;
+    }
+
+    .room.dark {
+      background: linear-gradient(#111, #1d1d1d);
+    }
+
+    .room.dark .back-wall,
+    .room.dark .side-wall-left,
+    .room.dark .side-wall-right {
+      background: #181818;
+      border-color: #2a2a2a;
+    }
+
+    .room.dark .floor,
+    .room.dark .ceiling {
+      background: linear-gradient(#1f1f1f, #0f0f0f);
+      border-color: #2a2a2a;
+    }
+
+    footer {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+      background: #f7f7f4;
+    }
+
+    footer a {
+      color: #111;
+      text-decoration: none;
+      border-bottom: 1px solid #111;
+    }
+
+    @media (max-width: 800px) {
+      header {
+        padding: 20px;
+      }
+
+      .gallery-space {
+        height: 580px;
+      }
+
+      .main-art {
+        width: 260px;
+        height: 340px;
+      }
+
+      .left-art,
+      .right-art {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div>Luca Jäg</div>
+    <div>Virtual Exhibition</div>
+  </header>
+
+  <section class="intro">
+    <h1>Empty Room<br>Full Noise</h1>
+    <p>Scroll to enter</p>
+  </section>
+
+  <section class="room">
+    <div class="gallery-space">
+      <div class="back-wall"></div>
+      <div class="ceiling"></div>
+      <div class="floor"></div>
+      <div class="side-wall-left"></div>
+      <div class="side-wall-right"></div>
+
+      <div class="artwork main-art">
+        <img src="images/artwork-1.jpg" alt="Main artwork">
+      </div>
+
+      <div class="artwork left-art">
+        <img src="images/artwork-2.jpg" alt="Artwork left">
+      </div>
+
+      <div class="artwork right-art">
+        <img src="images/artwork-3.jpg" alt="Artwork right">
+      </div>
+
+      <div class="caption">Room I — White Hall</div>
+    </div>
+  </section>
+
+  <section class="transition">
+    next room
+  </section>
+
+  <section class="room dark">
+    <div class="gallery-space">
+      <div class="back-wall"></div>
+      <div class="ceiling"></div>
+      <div class="floor"></div>
+      <div class="side-wall-left"></div>
+      <div class="side-wall-right"></div>
+
+      <div class="artwork main-art">
+        <img src="images/artwork-4.jpg" alt="Main artwork room two">
+      </div>
+
+      <div class="artwork left-art">
+        <img src="images/artwork-5.jpg" alt="Artwork left room two">
+      </div>
+
+      <div class="artwork right-art">
+        <img src="images/artwork-6.jpg" alt="Artwork right room two">
+      </div>
+
+      <div class="caption" style="color:white;">Room II — Black Archive</div>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <h2>End of Exhibition</h2>
+      <br>
+      <a href="https://www.instagram.com/luca_jaeg/" target="_blank">Instagram ansehen</a>
+    </div>
+  </footer>
+
+  <script>
+    const rooms = document.querySelectorAll(".gallery-space");
+
+    window.addEventListener("scroll", () => {
+      rooms.forEach(room => {
+        const rect = room.getBoundingClientRect();
+        const center = window.innerHeight / 2;
+        const distance = rect.top - center;
+        const rotate = distance * 0.015;
+
+        room.style.transform = `rotateX(${rotate}deg)`;
+      });
+    });
+  </script>
+
+</body>
+</html>
