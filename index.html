@@ -6,11 +6,19 @@
   <title>Luca Jäger – Virtual Exhibition</title>
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background: #f7f7f4;
+      background: #f7f7f2;
       color: #111;
       overflow-x: hidden;
     }
@@ -20,255 +28,265 @@
       top: 0;
       left: 0;
       width: 100%;
-      padding: 28px 40px;
+      padding: 24px 34px;
       display: flex;
       justify-content: space-between;
-      z-index: 20;
+      z-index: 100;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      transform: scaleY(1.45);
+      transform-origin: top;
       mix-blend-mode: difference;
       color: white;
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transform: scaleY(1.4);
-      transform-origin: top;
+      pointer-events: none;
     }
 
     .intro {
       height: 100vh;
+      background: #f7f7f2;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      background: #f7f7f4;
       position: relative;
+      overflow: hidden;
     }
 
     .intro h1 {
-      font-size: clamp(58px, 12vw, 200px);
+      font-size: clamp(64px, 13vw, 230px);
+      line-height: 0.68;
       font-weight: 500;
-      letter-spacing: -0.09em;
-      line-height: 0.72;
-      transform: scaleY(2.1);
+      letter-spacing: -0.095em;
+      text-align: center;
+      transform: scaleY(2.15);
       transform-origin: center;
     }
 
     .intro p {
       position: absolute;
-      bottom: 65px;
-      font-size: 24px;
-      letter-spacing: 0.18em;
+      bottom: 60px;
+      font-size: 26px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       opacity: 0.45;
-      transform: scaleY(1.5);
+      transform: scaleY(1.45);
+    }
+
+    .gallery-section {
+      min-height: 180vh;
+      background: linear-gradient(#f7f7f2, #eeeeea);
+      position: relative;
     }
 
     .room {
-      min-height: 145vh;
-      position: relative;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      perspective: 1200px;
-      background: linear-gradient(#fbfbf8, #e9e9e3);
+      perspective: 1400px;
     }
 
-    .gallery-space {
-      width: min(1200px, 90vw);
-      height: 720px;
-      position: sticky;
-      top: 80px;
+    .room-inner {
+      width: min(1180px, 88vw);
+      height: min(680px, 74vh);
+      position: relative;
       transform-style: preserve-3d;
     }
 
     .back-wall {
       position: absolute;
       inset: 0;
-      background: #fafaf7;
-      border: 2px solid #e3e3dc;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,1), rgba(245,245,240,0.85) 58%, rgba(232,232,224,0.9) 100%);
+      border: 2px solid #deded6;
       box-shadow:
-        inset 0 0 120px rgba(0,0,0,0.045),
-        0 0 0 1px rgba(255,255,255,0.9);
+        inset 0 0 120px rgba(0,0,0,0.055),
+        0 30px 100px rgba(0,0,0,0.08);
+    }
+
+    .back-wall::before {
+      content: "";
+      position: absolute;
+      inset: 26px;
+      border: 1px solid rgba(160,160,150,0.22);
+      pointer-events: none;
     }
 
     .floor {
       position: absolute;
       left: 0;
-      bottom: -260px;
+      bottom: -210px;
       width: 100%;
-      height: 360px;
-      background: linear-gradient(#ededeb, #d8d8d2);
-      transform: rotateX(78deg);
+      height: 260px;
+      background: linear-gradient(to bottom, #e7e7e0, #d5d5cc);
+      transform: rotateX(68deg);
       transform-origin: top;
-      border-top: 2px solid #d8d8d0;
-      box-shadow: inset 0 35px 90px rgba(0,0,0,0.06);
+      border-top: 2px solid #d2d2c8;
+      box-shadow: inset 0 30px 80px rgba(0,0,0,0.08);
+      z-index: 1;
+      pointer-events: none;
     }
 
     .ceiling {
       position: absolute;
       left: 0;
-      top: -260px;
+      top: -210px;
       width: 100%;
-      height: 360px;
-      background: linear-gradient(#ffffff, #efefea);
-      transform: rotateX(-78deg);
+      height: 260px;
+      background: linear-gradient(to top, #f1f1eb, #ffffff);
+      transform: rotateX(-68deg);
       transform-origin: bottom;
-      border-bottom: 2px solid #ddddd6;
-      box-shadow: inset 0 -35px 80px rgba(0,0,0,0.035);
+      border-bottom: 2px solid #d8d8cf;
+      z-index: 1;
+      pointer-events: none;
     }
 
-    .side-wall-left,
-    .side-wall-right {
+    .left-wall,
+    .right-wall {
       position: absolute;
       top: 0;
-      width: 360px;
+      width: 280px;
       height: 100%;
-      background: #f3f3ef;
-      border: 2px solid #dfdfd7;
-      box-shadow: inset 0 0 70px rgba(0,0,0,0.045);
+      background: #eeeee8;
+      border: 2px solid #d8d8cf;
+      box-shadow: inset 0 0 70px rgba(0,0,0,0.055);
+      z-index: 1;
+      pointer-events: none;
     }
 
-    .side-wall-left {
-      left: -360px;
-      transform: rotateY(76deg);
+    .left-wall {
+      left: -280px;
+      transform: rotateY(72deg);
       transform-origin: right;
     }
 
-    .side-wall-right {
-      right: -360px;
-      transform: rotateY(-76deg);
+    .right-wall {
+      right: -280px;
+      transform: rotateY(-72deg);
       transform-origin: left;
     }
 
     .artwork {
       position: absolute;
-      background: white;
-      padding: 12px;
-      box-shadow: 0 24px 70px rgba(0,0,0,0.15);
+      left: 50%;
+      top: 50%;
+      width: min(680px, 62vw);
+      height: min(455px, 48vh);
+      transform: translate(-50%, -50%);
+      background: #ffffff;
+      padding: 14px;
+      box-shadow:
+        0 26px 80px rgba(0,0,0,0.18),
+        0 0 0 1px rgba(0,0,0,0.05);
+      z-index: 5;
       cursor: pointer;
       transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
 
+    .artwork:hover {
+      transform: translate(-50%, -50%) scale(1.035);
+      box-shadow:
+        0 38px 120px rgba(0,0,0,0.24),
+        0 0 0 1px rgba(0,0,0,0.06);
+    }
+
     .artwork img {
-      display: block;
       width: 100%;
       height: 100%;
+      display: block;
       object-fit: cover;
       background: #ddd;
     }
 
-    .main-art {
-      width: 540px;
-      height: 360px;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .main-art:hover {
-      transform: translate(-50%, -50%) scale(1.06);
-      box-shadow: 0 35px 110px rgba(0,0,0,0.22);
-    }
-
-    .left-art {
-      width: 220px;
-      height: 280px;
-      left: 80px;
-      top: 210px;
-    }
-
-    .right-art {
-      width: 220px;
-      height: 280px;
-      right: 80px;
-      top: 210px;
-    }
-
-    .left-art:hover,
-    .right-art:hover {
-      transform: scale(1.06);
-      box-shadow: 0 35px 100px rgba(0,0,0,0.22);
-    }
-
-    .caption {
+    .room-title {
       position: absolute;
-      bottom: 38px;
       left: 50%;
-      transform: translateX(-50%) scaleY(1.4);
+      bottom: 54px;
+      transform: translateX(-50%) scaleY(1.35);
       font-size: 13px;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      opacity: 0.55;
+      opacity: 0.48;
+      z-index: 10;
+      white-space: nowrap;
     }
 
     .transition {
       min-height: 100vh;
-      background: linear-gradient(#f7f7f4, #f6f6f2);
+      background: #f7f7f2;
       color: #111;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(60px, 12vw, 210px);
+      font-size: clamp(64px, 13vw, 220px);
       font-weight: 500;
-      letter-spacing: -0.09em;
-      line-height: 0.72;
-      transform: scaleY(2.1);
+      letter-spacing: -0.095em;
+      line-height: 0.68;
       text-transform: uppercase;
+      transform: scaleY(2.05);
+      transform-origin: center;
+      overflow: hidden;
     }
 
-    .room.second {
-      background: linear-gradient(#f6f6f2, #e1e1db);
+    .gallery-section.second {
+      background: linear-gradient(#f7f7f2, #e8e8e2);
     }
 
-    .room.second .back-wall {
-      background: #f8f8f4;
-      border-color: #d9d9d1;
+    .gallery-section.second .back-wall {
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,252,1), rgba(241,241,236,0.9) 58%, rgba(222,222,214,0.95) 100%);
+      border-color: #d5d5ca;
     }
 
-    .room.second .side-wall-left,
-    .room.second .side-wall-right {
-      background: #eeeeea;
-      border-color: #d4d4ca;
+    .gallery-section.second .artwork {
+      width: min(540px, 54vw);
+      height: min(640px, 62vh);
     }
 
-    footer {
+    .end {
       min-height: 100vh;
+      background: #f7f7f2;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 40px;
-      background: #f7f7f4;
     }
 
-    footer h2 {
-      font-size: clamp(48px, 8vw, 140px);
+    .end h2 {
+      font-size: clamp(54px, 10vw, 180px);
       font-weight: 500;
-      letter-spacing: -0.08em;
-      line-height: 0.75;
-      transform: scaleY(1.8);
-      margin-bottom: 60px;
+      line-height: 0.68;
+      letter-spacing: -0.09em;
+      transform: scaleY(1.95);
+      margin-bottom: 70px;
     }
 
-    footer a {
+    .end a {
       color: #111;
       text-decoration: none;
       border-bottom: 1px solid #111;
       font-size: 18px;
-      letter-spacing: 0.08em;
       text-transform: uppercase;
+      letter-spacing: 0.12em;
     }
 
     #lightbox {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.92);
+      background: rgba(0,0,0,0.93);
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: 0.3s ease;
+      transition: 0.25s ease;
       z-index: 9999;
+      padding: 30px;
     }
 
     #lightbox.active {
@@ -277,30 +295,30 @@
     }
 
     #lightbox img {
-      max-width: 90vw;
-      max-height: 90vh;
-      box-shadow: 0 30px 120px rgba(0,0,0,0.5);
+      max-width: 92vw;
+      max-height: 88vh;
+      box-shadow: 0 30px 140px rgba(0,0,0,0.55);
     }
 
     #lightbox span {
       position: absolute;
-      top: 30px;
-      right: 40px;
+      top: 28px;
+      right: 36px;
       color: white;
-      font-size: 14px;
+      opacity: 0.65;
+      font-size: 13px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      opacity: 0.7;
     }
 
     @media (max-width: 800px) {
       header {
-        padding: 20px;
+        padding: 18px 20px;
         font-size: 11px;
       }
 
       .intro h1 {
-        font-size: 64px;
+        font-size: 68px;
         transform: scaleY(1.8);
       }
 
@@ -308,18 +326,37 @@
         font-size: 16px;
       }
 
-      .gallery-space {
-        height: 580px;
+      .room-inner {
+        width: 92vw;
+        height: 64vh;
       }
 
-      .main-art {
-        width: 300px;
-        height: 210px;
+      .artwork {
+        width: 78vw;
+        height: 45vh;
       }
 
-      .left-art,
-      .right-art {
-        display: none;
+      .gallery-section.second .artwork {
+        width: 68vw;
+        height: 50vh;
+      }
+
+      .left-wall,
+      .right-wall {
+        width: 160px;
+      }
+
+      .left-wall {
+        left: -160px;
+      }
+
+      .right-wall {
+        right: -160px;
+      }
+
+      .transition {
+        font-size: 72px;
+        transform: scaleY(1.75);
       }
     }
   </style>
@@ -337,27 +374,21 @@
     <p>Scroll to Enter</p>
   </section>
 
-  <section class="room">
-    <div class="gallery-space">
-      <div class="back-wall"></div>
-      <div class="ceiling"></div>
-      <div class="floor"></div>
-      <div class="side-wall-left"></div>
-      <div class="side-wall-right"></div>
+  <section class="gallery-section">
+    <div class="room">
+      <div class="room-inner">
+        <div class="back-wall"></div>
+        <div class="ceiling"></div>
+        <div class="floor"></div>
+        <div class="left-wall"></div>
+        <div class="right-wall"></div>
 
-      <div class="artwork main-art">
-        <img src="https://res.cloudinary.com/dmlbwubvc/image/upload/v1781306772/Screenshot_2026-06-13_011917_f97ibb.png" alt="Main artwork">
+        <div class="artwork">
+          <img src="https://res.cloudinary.com/dmlbwubvc/image/upload/v1781306772/Screenshot_2026-06-13_011917_f97ibb.png" alt="Artwork by Luca Jäger">
+        </div>
+
+        <div class="room-title">Room I — White Hall</div>
       </div>
-
-      <div class="artwork left-art">
-        <img src="images/artwork-2.jpg" alt="Artwork left">
-      </div>
-
-      <div class="artwork right-art">
-        <img src="images/artwork-3.jpg" alt="Artwork right">
-      </div>
-
-      <div class="caption">Room I — White Hall</div>
     </div>
   </section>
 
@@ -365,36 +396,34 @@
     Room II
   </section>
 
-  <section class="room second">
-    <div class="gallery-space">
-      <div class="back-wall"></div>
-      <div class="ceiling"></div>
-      <div class="floor"></div>
-      <div class="side-wall-left"></div>
-      <div class="side-wall-right"></div>
+  <section class="gallery-section second">
+    <div class="room">
+      <div class="room-inner">
+        <div class="back-wall"></div>
+        <div class="ceiling"></div>
+        <div class="floor"></div>
+        <div class="left-wall"></div>
+        <div class="right-wall"></div>
 
-      <div class="artwork main-art">
-        <img src="images/artwork-4.jpg" alt="Main artwork room two">
+        <div class="artwork">
+          <img src="images/artwork-2.jpg" alt="Artwork by Luca Jäger">
+        </div>
+
+        <div class="room-title">Room II — Soft Archive</div>
       </div>
-
-      <div class="artwork left-art">
-        <img src="images/artwork-5.jpg" alt="Artwork left room two">
-      </div>
-
-      <div class="artwork right-art">
-        <img src="images/artwork-6.jpg" alt="Artwork right room two">
-      </div>
-
-      <div class="caption">Room II — Soft Archive</div>
     </div>
   </section>
 
-  <footer>
+  <section class="transition">
+    End
+  </section>
+
+  <section class="end">
     <div>
       <h2>End of<br>Exhibition</h2>
       <a href="https://www.instagram.com/luca_jaeg/" target="_blank">Instagram</a>
     </div>
-  </footer>
+  </section>
 
   <div id="lightbox">
     <span>Click anywhere to close</span>
@@ -402,19 +431,6 @@
   </div>
 
   <script>
-    const rooms = document.querySelectorAll(".gallery-space");
-
-    window.addEventListener("scroll", () => {
-      rooms.forEach(room => {
-        const rect = room.getBoundingClientRect();
-        const center = window.innerHeight / 2;
-        const distance = rect.top - center;
-        const rotate = distance * 0.012;
-
-        room.style.transform = `rotateX(${rotate}deg)`;
-      });
-    });
-
     const artworks = document.querySelectorAll(".artwork img");
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightbox-img");
