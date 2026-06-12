@@ -13,7 +13,7 @@
     }
 
     body {
-      font-family: Helvetica, Arial, sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       background: #f7f7f4;
       color: #111;
       overflow-x: hidden;
@@ -27,12 +27,14 @@
       padding: 28px 40px;
       display: flex;
       justify-content: space-between;
-      z-index: 10;
+      z-index: 20;
       mix-blend-mode: difference;
       color: white;
       font-size: 14px;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      transform: scaleY(1.4);
+      transform-origin: top;
     }
 
     .intro {
@@ -42,30 +44,36 @@
       justify-content: center;
       text-align: center;
       background: #f7f7f4;
+      position: relative;
     }
 
     .intro h1 {
-      font-size: clamp(48px, 10vw, 140px);
-      font-weight: 400;
-      letter-spacing: -0.08em;
-      line-height: 0.9;
+      font-size: clamp(70px, 13vw, 220px);
+      font-weight: 500;
+      letter-spacing: -0.09em;
+      line-height: 0.72;
+      transform: scaleY(2.1);
+      transform-origin: center;
     }
 
     .intro p {
       position: absolute;
-      bottom: 45px;
-      font-size: 14px;
-      opacity: 0.6;
+      bottom: 65px;
+      font-size: 24px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      transform: scaleY(1.5);
     }
 
     .room {
-      min-height: 140vh;
+      min-height: 145vh;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       perspective: 1200px;
-      background: linear-gradient(#fafafa, #ededeb);
+      background: linear-gradient(#fbfbf8, #e9e9e3);
     }
 
     .gallery-space {
@@ -79,9 +87,11 @@
     .back-wall {
       position: absolute;
       inset: 0;
-      background: #fbfbf8;
-      border: 1px solid #e4e4df;
-      box-shadow: inset 0 0 80px rgba(0,0,0,0.04);
+      background: #fafaf7;
+      border: 2px solid #e3e3dc;
+      box-shadow:
+        inset 0 0 120px rgba(0,0,0,0.045),
+        0 0 0 1px rgba(255,255,255,0.9);
     }
 
     .floor {
@@ -90,10 +100,11 @@
       bottom: -260px;
       width: 100%;
       height: 360px;
-      background: linear-gradient(#efefeb, #dcdcd6);
+      background: linear-gradient(#ededeb, #d8d8d2);
       transform: rotateX(78deg);
       transform-origin: top;
-      border-top: 1px solid #ddd;
+      border-top: 2px solid #d8d8d0;
+      box-shadow: inset 0 35px 90px rgba(0,0,0,0.06);
     }
 
     .ceiling {
@@ -102,10 +113,11 @@
       top: -260px;
       width: 100%;
       height: 360px;
-      background: linear-gradient(#ffffff, #eeeeea);
+      background: linear-gradient(#ffffff, #efefea);
       transform: rotateX(-78deg);
       transform-origin: bottom;
-      border-bottom: 1px solid #e0e0dc;
+      border-bottom: 2px solid #ddddd6;
+      box-shadow: inset 0 -35px 80px rgba(0,0,0,0.035);
     }
 
     .side-wall-left,
@@ -114,8 +126,9 @@
       top: 0;
       width: 360px;
       height: 100%;
-      background: #f4f4f0;
-      border: 1px solid #e2e2dc;
+      background: #f3f3ef;
+      border: 2px solid #dfdfd7;
+      box-shadow: inset 0 0 70px rgba(0,0,0,0.045);
     }
 
     .side-wall-left {
@@ -134,13 +147,9 @@
       position: absolute;
       background: white;
       padding: 12px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.12);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    .artwork:hover {
-      transform: scale(1.04);
-      box-shadow: 0 32px 90px rgba(0,0,0,0.18);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
 
     .artwork img {
@@ -159,6 +168,11 @@
       transform: translate(-50%, -50%);
     }
 
+    .main-art:hover {
+      transform: translate(-50%, -50%) scale(1.06);
+      box-shadow: 0 35px 110px rgba(0,0,0,0.22);
+    }
+
     .left-art {
       width: 220px;
       height: 280px;
@@ -173,43 +187,51 @@
       top: 210px;
     }
 
+    .left-art:hover,
+    .right-art:hover {
+      transform: scale(1.06);
+      box-shadow: 0 35px 100px rgba(0,0,0,0.22);
+    }
+
     .caption {
       position: absolute;
       bottom: 38px;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) scaleY(1.4);
       font-size: 13px;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       opacity: 0.55;
     }
 
     .transition {
-      min-height: 80vh;
-      background: #111;
-      color: white;
+      min-height: 85vh;
+      background: #f7f7f4;
+      color: #111;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(32px, 7vw, 100px);
-      letter-spacing: -0.06em;
+      font-size: clamp(46px, 9vw, 150px);
+      font-weight: 500;
+      letter-spacing: -0.08em;
+      line-height: 0.75;
+      transform: scaleY(1.8);
+      text-transform: uppercase;
     }
 
-    .room.dark {
-      background: linear-gradient(#111, #1d1d1d);
+    .room.second {
+      background: linear-gradient(#f6f6f2, #e1e1db);
     }
 
-    .room.dark .back-wall,
-    .room.dark .side-wall-left,
-    .room.dark .side-wall-right {
-      background: #181818;
-      border-color: #2a2a2a;
+    .room.second .back-wall {
+      background: #f8f8f4;
+      border-color: #d9d9d1;
     }
 
-    .room.dark .floor,
-    .room.dark .ceiling {
-      background: linear-gradient(#1f1f1f, #0f0f0f);
-      border-color: #2a2a2a;
+    .room.second .side-wall-left,
+    .room.second .side-wall-right {
+      background: #eeeeea;
+      border-color: #d4d4ca;
     }
 
     footer {
@@ -222,15 +244,72 @@
       background: #f7f7f4;
     }
 
+    footer h2 {
+      font-size: clamp(48px, 8vw, 140px);
+      font-weight: 500;
+      letter-spacing: -0.08em;
+      line-height: 0.75;
+      transform: scaleY(1.8);
+      margin-bottom: 60px;
+    }
+
     footer a {
       color: #111;
       text-decoration: none;
       border-bottom: 1px solid #111;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s ease;
+      z-index: 9999;
+    }
+
+    #lightbox.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      box-shadow: 0 30px 120px rgba(0,0,0,0.5);
+    }
+
+    #lightbox span {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: white;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.7;
     }
 
     @media (max-width: 800px) {
       header {
         padding: 20px;
+        font-size: 11px;
+      }
+
+      .intro h1 {
+        font-size: 72px;
+        transform: scaleY(1.8);
+      }
+
+      .intro p {
+        font-size: 16px;
       }
 
       .gallery-space {
@@ -258,8 +337,8 @@
   </header>
 
   <section class="intro">
-    <h1>Empty Room<br>Full Noise</h1>
-    <p>Scroll to enter</p>
+    <h1>LUCA<br>JÄG</h1>
+    <p>Scroll to Enter</p>
   </section>
 
   <section class="room">
@@ -287,10 +366,10 @@
   </section>
 
   <section class="transition">
-    next room
+    Next Room
   </section>
 
-  <section class="room dark">
+  <section class="room second">
     <div class="gallery-space">
       <div class="back-wall"></div>
       <div class="ceiling"></div>
@@ -310,17 +389,21 @@
         <img src="images/artwork-6.jpg" alt="Artwork right room two">
       </div>
 
-      <div class="caption" style="color:white;">Room II — Black Archive</div>
+      <div class="caption">Room II — Soft Archive</div>
     </div>
   </section>
 
   <footer>
     <div>
-      <h2>End of Exhibition</h2>
-      <br>
-      <a href="https://www.instagram.com/luca_jaeg/" target="_blank">Instagram ansehen</a>
+      <h2>End of<br>Exhibition</h2>
+      <a href="https://www.instagram.com/luca_jaeg/" target="_blank">Instagram</a>
     </div>
   </footer>
+
+  <div id="lightbox">
+    <span>Click anywhere to close</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
 
   <script>
     const rooms = document.querySelectorAll(".gallery-space");
@@ -330,10 +413,26 @@
         const rect = room.getBoundingClientRect();
         const center = window.innerHeight / 2;
         const distance = rect.top - center;
-        const rotate = distance * 0.015;
+        const rotate = distance * 0.012;
 
         room.style.transform = `rotateX(${rotate}deg)`;
       });
+    });
+
+    const artworks = document.querySelectorAll(".artwork img");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+
+    artworks.forEach(img => {
+      img.addEventListener("click", () => {
+        lightbox.classList.add("active");
+        lightboxImg.src = img.src;
+      });
+    });
+
+    lightbox.addEventListener("click", () => {
+      lightbox.classList.remove("active");
+      lightboxImg.src = "";
     });
   </script>
 
